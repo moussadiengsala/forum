@@ -1,4 +1,4 @@
-package internals
+package serverConfig
 
 import (
 	"errors"
@@ -15,6 +15,7 @@ type Config struct {
 
 func (s *Config) Init(router *router.NewRouter) {
 	fmt.Println("Server started at ", s.Hostname, s.PORT)
+	
 	err := http.ListenAndServe(s.PORT, router)
 	if errors.Is(err, http.ErrServerClosed) {
 		fmt.Printf("server closed\n")

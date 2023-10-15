@@ -1,26 +1,22 @@
 package main
 
 import (
-
-	// internals "golang-rest-api-starter/internals/config/database"
-	server "golang-rest-api-starter/internals/config/server"
+	serverConfig "golang-rest-api-starter/internals/config/server"
 	"golang-rest-api-starter/router"
 	"golang-rest-api-starter/service/middleware"
 )
 
 func main() {
-	router := &router.NewRouter{
+	var route = router.NewRouter{
 		Middlewares: []router.Middleware{
-			middleware.AuthMiddleware,
-			middleware.LoggerMiddleware,
-			middleware.DBMiddleware,
-		},
-	}
+			middleware.DatabaseMiddleware,
+		}}
 
-	// instantiate a new server
-	server := server.Config{
+	// http.HandleFunc("/", handlers.HomeHandler)
+
+	var server = serverConfig.Config{
 		PORT:     ":8080",
 		Hostname: "http://localhost",
 	}
-	server.Init(router)
+	server.Init(&route)
 }

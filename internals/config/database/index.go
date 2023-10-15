@@ -1,10 +1,8 @@
-package internals
+package databaseConfig
 
 import (
 	"database/sql"
 	"log"
-
-	_ "github.com/mattn/go-sqlite3"
 )
 
 type Config struct {

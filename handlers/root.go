@@ -1,24 +1,20 @@
 package handlers
 
 import (
-	components "golang-rest-api-starter/Components"
 	"net/http"
 	"text/template"
 )
 
-var data = map[string]interface{}{
-	"name": "Moussa",
-	"sex":  "Male",
-	"age":  75,
-}
-
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	var funcM = template.FuncMap{
-		"test": components.Test,
+
+	files := []string{
+		"templates/base.html",
+		"templates/home.html",
+		"templates/components/header.html",
 	}
 
-	tmpl := template.Must(template.New("").Funcs(funcM).ParseFiles("templates/base.html", "templates/home.html"))
+	tmpl := template.Must(template.New("").ParseFiles(files...))
 
-	tmpl.ExecuteTemplate(w, "home.html", data)
+	tmpl.ExecuteTemplate(w, "base", nil)
 	return
 }

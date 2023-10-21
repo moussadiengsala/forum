@@ -20,9 +20,13 @@
     <title>Forums</title>
 </head>
 <body class="dark:bg-primary text-white">
-  {{template "header" .}}
+  <div class="flex">
+    {{template "aside" .}}
+    {{template "header" .}}
+  </div>
 
   {{template "main" .}}
+  <script src="static/js/main.js"></script>
 </body>
 </html>
 {{end}}

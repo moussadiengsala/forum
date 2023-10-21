@@ -11,6 +11,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		"templates/base.html",
 		"templates/home.html",
 		"templates/components/header.html",
+		"templates/components/aside.html",
 	}
 
 	tmpl := template.Must(template.New("").ParseFiles(files...))

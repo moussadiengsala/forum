@@ -2,21 +2,25 @@ package models
 
 import "time"
 
-type Comments struct {
+type Post struct {
 	ID       string
+	Image    any
+	Title    string
 	Content  string
 	AuthorID string
-	PostID   string
 
 	Likes    []string
 	DisLikes []string
 
-	Reply []string
+	Comments []string
+	Category []string
 
-	UserName  string
+	Username  string
 	FirstName string
 	LastName  string
 	Avatar    string
+
+	LikeStatus string
 
 	CreationDate time.Time
 }

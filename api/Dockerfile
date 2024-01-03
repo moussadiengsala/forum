@@ -1,12 +1,18 @@
+# Use the official Go image
+FROM golang:latest
 
-FROM golang:1.20-alpine3.18
-LABEL name="FORUM PROJECT"
-LABEL description="zone01 Dakar"
-LABEL authors="mousdieng; abdouazindiaye; dgaye; pka; mnom"
-RUN mkdir /app
-RUN apk update && apk add bash && apk add tree
-RUN apk add --no-cache gcc musl-dev
-ADD . /app
+# Set the working directory inside the container
 WORKDIR /app
-RUN go build -o forum
-CMD ["./forum"]
+
+# Copy the entire project to the working directory
+COPY . .
+
+# Build the Go application
+RUN go build -o main cmd/main.go
+
+# Expose the port the app runs on
+EXPOSE 7000
+
+# Command to run the executable
+CMD ["./main"]
+

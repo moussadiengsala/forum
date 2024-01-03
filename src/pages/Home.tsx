@@ -1,8 +1,9 @@
-import React from 'react'
+
+import Acceuil from '../components/Acceuil'
 
 function Home() {
   return (
-    <div className='text-4xl font-bold text-white'>Home</div>
+    <Acceuil />
   )
 }
 

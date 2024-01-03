@@ -1,8 +1,10 @@
-package databaseConfig
+package internals
 
 import (
 	"database/sql"
 	"log"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type Config struct {
@@ -27,6 +29,5 @@ func (db *Config) Init() (*sql.DB, error) {
 		log.Println(err)
 		return nil, err
 	}
-
 	return databaseConnection, nil
 }

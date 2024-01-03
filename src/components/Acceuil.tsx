@@ -22,7 +22,7 @@ function Acceuil() {
                 </div>
                 <div className="bg-red-500 mt-6">
                   <i className="font-bold text-xs">Already have an account?</i>
-                  <Link to="/" className="border-2 h-10 rounded-full flex justify-center items-center">Create account</Link>
+                  <Link to="/" className="border-2 h-10 rounded-full flex justify-center items-center">Sign in</Link>
                 </div>
             </div>
         </div>

@@ -1,8 +1,10 @@
-import React from 'react'
+import Acceuil from '../components/Acceuil'
 
 function Signup() {
   return (
-    <div>Signup</div>
+    <>
+      <Acceuil />
+    </>
   )
 }
 

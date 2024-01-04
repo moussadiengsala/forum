@@ -9,20 +9,20 @@ function Acceuil() {
           <Logo style="w-1/4" />
         </div>
         <div className="flex flex-col justify-center">
-            <div className="bg-red-500">
+            <div className="">
                 <h1 className="text-4xl font-black">Happening now</h1>
             </div>
-            <div className="bg-green-500 w-fit">
+            <div className="w-fit">
                 <h2>Join today.</h2>
                 <div className="flex space-y-2 flex-col">
                   <GitHubIcon text="Sign up with Google" href="/" />
                   <GoogleIcon text="Sign up with Github" href="/" />
-                  <Link to="/" className=" bg-sky-500 h-10 rounded-full flex justify-center items-center">Create account</Link>
+                  <Link to="/auth/signup" className=" bg-sky-500 h-10 rounded-full flex justify-center items-center">Create account</Link>
                   <i className="w-48 text-xs">By signing up, you agree to the Terms of Service and Privacy Policy, including Cookie Use.</i>
                 </div>
-                <div className="bg-red-500 mt-6">
+                <div className="mt-6">
                   <i className="font-bold text-xs">Already have an account?</i>
-                  <Link to="/" className="border-2 h-10 rounded-full flex justify-center items-center">Sign in</Link>
+                  <Link to="/auth/signin" className="border-2 h-10 rounded-full flex justify-center items-center">Sign in</Link>
                 </div>
             </div>
         </div>

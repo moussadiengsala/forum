@@ -104,7 +104,7 @@ func DeletePost(w http.ResponseWriter, r *http.Request) {
 // {
 //     "FirstName": "Test",
 //     "LastName": "Test",
-//     "Email": "abdouaziznjay@gmail.com ",
+//     "Email": "abdouaziznjay@gmail.com",
 //     "Username": "aziz",
 //     "Bio": "Software engineer at Zone01 Dakar",
 //     "Avatar": "http://source.unsplash.com/50x50",

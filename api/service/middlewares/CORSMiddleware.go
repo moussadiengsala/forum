@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"net/http"
 
 	"learn.zone01dakar.sn/forum-rest-api/lib"
@@ -8,7 +9,8 @@ import (
 
 // Implements a CORS middleware
 
-func CORSMiddleware (next lib.Handler) lib.Handler {
+func CORSMiddleware(next lib.Handler) lib.Handler {
+	fmt.Println("cors controller middleware")
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")

@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"learn.zone01dakar.sn/forum-rest-api/lib"
+	// service "learn.zone01dakar.sn/forum-rest-api/service/middlewares"
 )
 
 // App represents the core application structure, managing routes, middleware, and handling HTTP requests.
@@ -56,14 +57,22 @@ func (a *App) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	path := r.URL.Path
 	method := r.Method
 
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With")
+	if method == http.MethodOptions {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+
 	for routePath, routeHandler := range a.routes {
 		handler, ok := routeHandler[method]
+
 		if strings.HasPrefix(path, routePath) && ok {
 			finalHandler := handler
 			for _, mw := range a.middleware {
 				finalHandler = mw(finalHandler)
 			}
-
 			finalHandler(w, r)
 			return
 		} else if strings.HasPrefix(path, routePath) {
@@ -77,7 +86,6 @@ func (a *App) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			json.NewEncoder(w).Encode(response)
 			return
 		}
-
 	}
 
 	response := map[string]interface{}{

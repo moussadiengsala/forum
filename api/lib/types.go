@@ -11,9 +11,9 @@ type Handler func(w http.ResponseWriter, r *http.Request)
 type Middleware func(Handler) Handler
 
 type Response struct {
-	Code    int
-	Message string
-	Data    interface{}
+	Code    int         `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
 }
 type Credentials struct {
 	Identifiers string `json:"identifiers"`

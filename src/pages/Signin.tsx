@@ -2,19 +2,13 @@ import { createPortal } from "react-dom"
 import Acceuil from "../components/Acceuil"
 import { GitHubIcon, GoogleIcon } from "../components/Buttons"
 import { Link } from "react-router-dom"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { XMarkIcon } from '@heroicons/react/24/outline'
 
 
-type FormValue = {
-    name: string;
-    email: string;
-    message: string;
-}
-
 function Signin() {
 
-  let [state, setState] = useState<FormValue>({name: "", email: "", message: ""})
+  let [state, setState] = useState<LoginForm>({password: "", identifier: ""})
 
   let handleForm = (e: React.ChangeEvent<HTMLElement>) => {
     setState((prev) => ({
@@ -43,8 +37,8 @@ function Signin() {
                   <GoogleIcon text="Sign up with Github" href="/" />
 
                   <form action="POST" onSubmit={handleSubmit} className="flex flex-col space-y-2">
-                    <input type="text" className="h-10 input-form" onChange={handleForm} required/>
-                    <input type="password" name="" className="h-10 input-form" onChange={handleForm} required/>
+                    <input type="text" name="identifier" className="input-form" onChange={handleForm} required/>
+                    <input type="password" name="password" className="input-form" onChange={handleForm} required/>
                     <input type="submit" value="next" className="h-10 bg-white rounded-full" />
                   </form>
 

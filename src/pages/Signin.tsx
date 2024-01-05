@@ -2,13 +2,13 @@ import { createPortal } from "react-dom"
 import Acceuil from "../components/Acceuil"
 import { GitHubIcon, GoogleIcon } from "../components/Buttons"
 import { Link } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { XMarkIcon } from '@heroicons/react/24/outline'
 
 
 function Signin() {
-
-  let [state, setState] = useState<LoginForm>({password: "", identifier: ""})
+  let [state, setState] = useState<LoginForm>({password: "", identifiers: ""})
+  let [infoLogged, setInfoLogged] = useState("")
 
   let handleForm = (e: React.ChangeEvent<HTMLElement>) => {
     setState((prev) => ({
@@ -20,6 +20,24 @@ function Signin() {
   let handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
+
+    try {
+      let response = await fetch("http://localhost:8000/api/auth/signin", {
+        method: "POST",
+        body: JSON.stringify(state),
+      });
+  
+      if (!response.ok) {
+        const errorMessage = await response.json();
+        throw new Error(errorMessage.message || "An error occurred during signup");
+      }
+
+      let data = await response.json();
+      console.log(data)
+
+    } catch (error) {
+      setInfoLogged((error as Error).message); 
+    }
   }
 
   return (
@@ -37,8 +55,11 @@ function Signin() {
                   <GoogleIcon text="Sign up with Github" href="/" />
 
                   <form action="POST" onSubmit={handleSubmit} className="flex flex-col space-y-2">
-                    <input type="text" name="identifier" className="input-form" onChange={handleForm} required/>
+                    <input type="text" name="identifiers" className="input-form" onChange={handleForm} required/>
                     <input type="password" name="password" className="input-form" onChange={handleForm} required/>
+                    <div>
+                      {infoLogged}
+                    </div>
                     <input type="submit" value="next" className="h-10 bg-white rounded-full" />
                   </form>
 

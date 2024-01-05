@@ -10,6 +10,6 @@ type RegisterForm = {
 }
 
 type LoginForm = {
-    identifier: string
+    identifiers: string
     password: string;
 }

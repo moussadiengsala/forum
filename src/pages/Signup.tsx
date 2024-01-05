@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Acceuil from '../components/Acceuil'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import { CheckBadgeIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
+const initValue: RegisterForm = {firstname: "", lastname: "", email: "", username: "", bio: "", password: ""}
+
 function Signup() {
-  
-  let [state, setState] = useState<RegisterForm>({firstname: "", lastname: "", email: "", username: "", bio: "", password: ""})
+  let [state, setState] = useState<RegisterForm>(initValue)
   let [infoLogged, setInfoLogged] = useState("")
   let [isSuccess, setIsSuccess] = useState(false)
 

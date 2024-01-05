@@ -1,5 +1,4 @@
 
-
 type RegisterForm = {
     firstname: string;
     lastname: string;

@@ -4,11 +4,12 @@ import { GitHubIcon, GoogleIcon } from "../components/Buttons"
 import { Link } from "react-router-dom"
 import { useState } from "react"
 import { XMarkIcon } from '@heroicons/react/24/outline'
-
+import { useQuery } from "react-query"
+import { getUserInfo } from "../utils/getUserInfo"
 
 function Signin() {
   let [state, setState] = useState<LoginForm>({password: "", identifiers: ""})
-  let [infoLogged, setInfoLogged] = useState("")
+  const { isLoading, isError, data, error, refetch } = useQuery(['signin'], () => getUserInfo(state), {enabled: false, retry: false})
 
   let handleForm = (e: React.ChangeEvent<HTMLElement>) => {
     setState((prev) => ({
@@ -20,24 +21,7 @@ function Signin() {
   let handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
-
-    try {
-      let response = await fetch("http://localhost:8000/api/auth/signin", {
-        method: "POST",
-        body: JSON.stringify(state),
-      });
-  
-      if (!response.ok) {
-        const errorMessage = await response.json();
-        throw new Error(errorMessage.message || "An error occurred during signup");
-      }
-
-      let data = await response.json();
-      console.log(data)
-
-    } catch (error) {
-      setInfoLogged((error as Error).message); 
-    }
+    refetch()
   }
 
   return (
@@ -58,9 +42,9 @@ function Signin() {
                     <input type="text" name="identifiers" className="input-form" onChange={handleForm} required/>
                     <input type="password" name="password" className="input-form" onChange={handleForm} required/>
                     <div>
-                      {infoLogged}
+                      {(error as Error)?.message}
                     </div>
-                    <input type="submit" value="next" className="h-10 bg-white rounded-full" />
+                    <input type="submit" value={isLoading ? "loading..." : "next"} className="h-10 bg-white rounded-full" disabled={isLoading} />
                   </form>
 
                   <div className="space-x-2 text-xs">

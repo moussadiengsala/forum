@@ -27,11 +27,6 @@ func (p *Post) Create(w http.ResponseWriter, r *http.Request) {
 		Fields:        []string{"image", "title", "content", "author_id"},
 		Table:         "Post",
 		ItemsToInsert: []interface{}{&credentials.Image, &credentials.Title, &credentials.Content, &credentials.AuthorID},
-		SumittedData: map[string]interface{}{
-			"title":     &credentials.Title,
-			"content":   &credentials.Content,
-			"author_id": &credentials.AuthorID,
-		},
 	}
 
 	post.Create(w, r, &response)
@@ -76,7 +71,7 @@ func (p Post) P(w http.ResponseWriter, r *http.Request, response *lib.Response, 
 			{Item: "id", EntrieID: "entries_id", Table: "Postlikes", Dest: &post.Likes},
 			{Item: "id", EntrieID: "entries_id", Table: "Postdislikes", Dest: &post.DisLikes},
 		},
-		UserInfo: []interface{}{&post.FirstName, &post.LastName, &post.Username, &post.Avatar},
+		UserInfo: []interface{}{&post.User.FirstName, &post.User.LastName, &post.User.Username, &post.User.Avatar},
 		AuthorID: &post.AuthorID,
 	}
 

@@ -7,10 +7,7 @@ type Reaction struct {
 	AuthorID  string
 	EntriesID string
 
-	UserName  string
-	FirstName string
-	LastName  string
-	Avatar    string
+	User User
 
 	Action string
 

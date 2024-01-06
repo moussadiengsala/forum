@@ -9,7 +9,6 @@ import (
 	core "learn.zone01dakar.sn/forum-rest-api/internals/core"
 	"learn.zone01dakar.sn/forum-rest-api/lib"
 	errors "learn.zone01dakar.sn/forum-rest-api/lib/errors"
-	"learn.zone01dakar.sn/forum-rest-api/lib/validators"
 	"learn.zone01dakar.sn/forum-rest-api/models"
 	service "learn.zone01dakar.sn/forum-rest-api/service/CRUD"
 )
@@ -35,16 +34,9 @@ func (a Auth) SignIn(w http.ResponseWriter, r *http.Request) {
 
 	// By default we suppose the user login with his username
 	var identifiers = "username"
-	if validators.IsValidEmail(credentials.Identifiers) {
-		identifiers = "email"
-	}
 
-	cre := map[string]interface{}{
-		identifiers: credentials.Identifiers,
-		"password":  credentials.Password,
-	}
-
-	if errValidator := validators.ValidatorService(cre); errValidator != nil {
+	validators := core.Validators{}
+	if errValidator := validators.ValidatorService(credentials); errValidator != nil {
 		errors.ErrorWriter(&response, errValidator.Error(), http.StatusBadRequest)
 		lib.ResponseFormatter(w, response)
 		return
@@ -101,16 +93,8 @@ func (a Auth) Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	cre := map[string]interface{}{
-		"email":     userData.Email,
-		"password":  userData.Password,
-		"firstname": userData.FirstName,
-		"lastname":  userData.LastName,
-		"username":  userData.Username,
-		"bio":       userData.Bio,
-	}
-
-	if errValidator := validators.ValidatorService(cre); errValidator != nil {
+	validators := core.Validators{}
+	if errValidator := validators.ValidatorService(userData); errValidator != nil {
 		errors.ErrorWriter(&response, errValidator.Error(), http.StatusBadRequest)
 		lib.ResponseFormatter(w, response)
 		return

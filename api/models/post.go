@@ -15,10 +15,7 @@ type Post struct {
 	Comments []string
 	Category []string
 
-	Username  string
-	FirstName string
-	LastName  string
-	Avatar    string
+	User User
 
 	LikeStatus string
 

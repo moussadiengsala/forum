@@ -25,11 +25,6 @@ func (c Comment) Create(w http.ResponseWriter, r *http.Request) {
 		Fields:        []string{"content", "author_id", "post_id"},
 		Table:         "Comments",
 		ItemsToInsert: []interface{}{&credentials.Content, &credentials.AuthorID, &credentials.PostID},
-		SumittedData: map[string]interface{}{
-			"content":   &credentials.Content,
-			"author_id": &credentials.AuthorID,
-			"post_id":   &credentials.PostID,
-		},
 	}
 	post.Create(w, r, &response)
 	lib.ResponseFormatter(w, response)
@@ -48,7 +43,7 @@ func (c Comment) GetCommentByID(w http.ResponseWriter, r *http.Request) {
 			{Item: "id", EntrieID: "entries_id", Table: "Commentlikes", Dest: &comment.Likes},
 			{Item: "id", EntrieID: "entries_id", Table: "Commentdislikes", Dest: &comment.DisLikes},
 		},
-		UserInfo: []interface{}{&comment.FirstName, &comment.LastName, &comment.UserName, &comment.Avatar},
+		UserInfo: []interface{}{&comment.User.FirstName, &comment.User.LastName, &comment.User.Username, &comment.User.Avatar},
 		AuthorID: &comment.AuthorID,
 	}
 

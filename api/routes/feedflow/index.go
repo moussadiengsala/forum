@@ -9,7 +9,6 @@ import (
 	core "learn.zone01dakar.sn/forum-rest-api/internals/core"
 	"learn.zone01dakar.sn/forum-rest-api/lib"
 	errors "learn.zone01dakar.sn/forum-rest-api/lib/errors"
-	"learn.zone01dakar.sn/forum-rest-api/lib/validators"
 	service "learn.zone01dakar.sn/forum-rest-api/service/CRUD"
 )
 
@@ -18,7 +17,6 @@ type CreateFeed struct {
 	Table         string
 	Credentials   interface{}
 	ItemsToInsert []interface{}
-	SumittedData  map[string]interface{}
 }
 
 func (f *CreateFeed) Create(w http.ResponseWriter, r *http.Request, response *lib.Response) {
@@ -28,7 +26,8 @@ func (f *CreateFeed) Create(w http.ResponseWriter, r *http.Request, response *li
 		return
 	}
 
-	if errValidator := validators.ValidatorService(f.SumittedData); errValidator != nil {
+	validators := core.Validators{}
+	if errValidator := validators.ValidatorService(f.Credentials); errValidator != nil {
 		errors.ErrorWriter(response, errValidator.Error(), http.StatusBadRequest)
 		return
 	}

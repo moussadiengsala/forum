@@ -13,10 +13,7 @@ type Comments struct {
 
 	Reply []string
 
-	UserName  string
-	FirstName string
-	LastName  string
-	Avatar    string
+	User User
 
 	CreationDate time.Time
 }

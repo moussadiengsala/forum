@@ -8,7 +8,6 @@ import (
 	core "learn.zone01dakar.sn/forum-rest-api/internals/core"
 	"learn.zone01dakar.sn/forum-rest-api/lib"
 	errors "learn.zone01dakar.sn/forum-rest-api/lib/errors"
-	"learn.zone01dakar.sn/forum-rest-api/lib/validators"
 	"learn.zone01dakar.sn/forum-rest-api/models"
 	service "learn.zone01dakar.sn/forum-rest-api/service/CRUD"
 )
@@ -40,17 +39,17 @@ func (re Reaction) Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	cre := map[string]interface{}{
-		"author_id":  credentials.AuthorID,
-		"entries_id": credentials.EntriesID,
-		"action":     credentials.Action,
-	}
+	// cre := map[string]interface{}{
+	// 	"author_id":  credentials.AuthorID,
+	// 	"entries_id": credentials.EntriesID,
+	// 	"action":     credentials.Action,
+	// }
 
-	if errValidator := validators.ValidatorService(cre); errValidator != nil {
-		errors.ErrorWriter(&response, errValidator.Error(), http.StatusBadRequest)
-		lib.ResponseFormatter(w, response)
-		return
-	}
+	// if errValidator := validators.ValidatorService(cre); errValidator != nil {
+	// 	errors.ErrorWriter(&response, errValidator.Error(), http.StatusBadRequest)
+	// 	lib.ResponseFormatter(w, response)
+	// 	return
+	// }
 
 	tables, _ := re.Action[credentials.Action]
 	db, _ := r.Context().Value("db").(lib.DB)

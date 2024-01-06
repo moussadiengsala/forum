@@ -1,15 +1,31 @@
 import { createPortal } from "react-dom"
-import Acceuil from "../components/Acceuil"
+import Acceuil from "../components/Home"
 import { GitHubIcon, GoogleIcon } from "../components/Buttons"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useQuery } from "react-query"
 import { fetcher } from "../utils/fetcher"
 import { useFormInput } from "../lib/formInput"
+import { useContext } from "react"
+import { Playload } from "../App"
 
 function Signin() {
-  let [state, handleForm] = useFormInput<LoginForm>({password: "", identifiers: ""})
-  const { isLoading, data, error, refetch } = useQuery(['signin'], () => fetcher({data: state, endpoint: "/auth/signin", method: "POST"}), {enabled: false, retry: false})
+  let navigate = useNavigate()
+  let [state, handleForm] = useFormInput<Credentials>({password: "", identifiers: ""})
+  let { setPayload } = useContext(Playload) ?? { setPayload: () => {} }
+
+  const { isLoading, error, refetch } = useQuery(
+    ['signin'], 
+    () => fetcher({data: state, endpoint: "/auth/signin", method: "POST"}), 
+    {
+      enabled: false, 
+      retry: false,
+      onSuccess: (data) => { 
+        setPayload(data)
+        navigate("/posts");
+      },
+    },
+  )
 
   let handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

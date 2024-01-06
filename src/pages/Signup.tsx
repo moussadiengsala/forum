@@ -1,5 +1,5 @@
 
-import Acceuil from '../components/Acceuil'
+import Acceuil from '../components/Home'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import { CheckBadgeIcon, XMarkIcon } from '@heroicons/react/24/outline'
@@ -7,11 +7,11 @@ import { useFormInput } from '../lib/formInput'
 import { useQuery } from 'react-query'
 import { fetcher } from '../utils/fetcher'
 
-const initValue: RegisterForm = {firstname: "", lastname: "", email: "", username: "", bio: "", password: ""}
+const initValue: User = {id: "", firstname: "", lastname: "", email: "", username: "", bio: "", password: "", avatar: ""}
 
 function Signup() {
  
-  let [state, handleForm] = useFormInput<RegisterForm>(initValue)
+  let [state, handleForm] = useFormInput<User>(initValue)
   const { isLoading, isSuccess, error, refetch } = useQuery(['signup'], () => fetcher({data: state, endpoint: "/auth/signup", method: "POST"}), {enabled: false, retry: false})
 
   let handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

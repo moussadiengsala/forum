@@ -75,7 +75,7 @@ func (a Auth) SignIn(w http.ResponseWriter, r *http.Request) {
 	}
 	userData.Password = ""
 	payload := lib.Payload{
-		User:    userData,
+		User:    userData, 
 		Session: sessions,
 	}
 	response.Data = payload

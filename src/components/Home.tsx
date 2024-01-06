@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { GitHubIcon, GoogleIcon, Logo } from "./Buttons"
 
 
-function Acceuil() {
+function Home() {
   return (
     <div className="grid grid-cols-2 w-full h-full bg-slate-900 text-white">
         <div className="flex justify-center items-center">
@@ -30,4 +30,4 @@ function Acceuil() {
   )
 }
 
-export default Acceuil
+export default Home

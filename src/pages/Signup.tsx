@@ -1,42 +1,23 @@
-import { useState } from 'react'
+
 import Acceuil from '../components/Acceuil'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
 import { CheckBadgeIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useFormInput } from '../lib/formInput'
+import { useQuery } from 'react-query'
+import { fetcher } from '../utils/fetcher'
 
 const initValue: RegisterForm = {firstname: "", lastname: "", email: "", username: "", bio: "", password: ""}
 
 function Signup() {
-  let [state, setState] = useState<RegisterForm>(initValue)
-  let [infoLogged, setInfoLogged] = useState("")
-  let [isSuccess, setIsSuccess] = useState(false)
-
-  let handleForm = (e: React.ChangeEvent<HTMLElement>) => {
-    setState((prev) => ({
-      ...prev,
-      [(e.target as HTMLInputElement | HTMLTextAreaElement).name]: (e.target as HTMLInputElement | HTMLTextAreaElement).value
-    }))
-  }
+ 
+  let [state, handleForm] = useFormInput<RegisterForm>(initValue)
+  const { isLoading, isSuccess, error, refetch } = useQuery(['signup'], () => fetcher({data: state, endpoint: "/auth/signup", method: "POST"}), {enabled: false, retry: false})
 
   let handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
-
-    try {
-      let response = await fetch("http://localhost:8000/api/auth/signup", {
-        method: "POST",
-        body: JSON.stringify(state),
-      });
-  
-      if (!response.ok) {
-        const errorMessage = await response.json();
-        throw new Error(errorMessage.message || "An error occurred during signup");
-      }
-
-      setIsSuccess((value) => !value)
-    } catch (error) {
-      setInfoLogged((error as Error).message); 
-    }
+    refetch()
   }
 
   return (
@@ -65,9 +46,9 @@ function Signup() {
 
                     <input type="password" name="password" className="h-10 input-form" onChange={handleForm} placeholder='password' required/>
                     <div className='text-xs'>
-                      <span>{infoLogged}</span>
+                      <span>{(error as Error)?.message}</span>
                     </div>
-                    <input type="submit" value="next" className="h-10 bg-white rounded-full" />
+                    <input type="submit" value={isLoading ? "loading..." : "next"} className="h-10 bg-white rounded-full" disabled={isLoading} />
                   </form>
               
                   <div className="space-x-2 text-xs">
@@ -85,7 +66,7 @@ function Signup() {
         <div className='bg-green-500 p-8 rounded-lg absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2'>
           <div>Signup successful!</div>
           <CheckBadgeIcon />
-          <Link to="/auth/signin" onClick={() => setIsSuccess(value => !value)} className='h-10 w-full rounded-full flex justify-center items-center bg-white'>Sign in</Link>
+          <Link to="/auth/signin" className='h-10 w-full rounded-full flex justify-center items-center bg-white'>Sign in</Link>
         </div>
         ,document.body
       )}

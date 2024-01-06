@@ -2,21 +2,14 @@ import { createPortal } from "react-dom"
 import Acceuil from "../components/Acceuil"
 import { GitHubIcon, GoogleIcon } from "../components/Buttons"
 import { Link } from "react-router-dom"
-import { useState } from "react"
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useQuery } from "react-query"
-import { getUserInfo } from "../utils/getUserInfo"
+import { fetcher } from "../utils/fetcher"
+import { useFormInput } from "../lib/formInput"
 
 function Signin() {
-  let [state, setState] = useState<LoginForm>({password: "", identifiers: ""})
-  const { isLoading, isError, data, error, refetch } = useQuery(['signin'], () => getUserInfo(state), {enabled: false, retry: false})
-
-  let handleForm = (e: React.ChangeEvent<HTMLElement>) => {
-    setState((prev) => ({
-      ...prev,
-      [(e.target as HTMLInputElement | HTMLTextAreaElement).name]: (e.target as HTMLInputElement | HTMLTextAreaElement).value
-    }))
-  }
+  let [state, handleForm] = useFormInput<LoginForm>({password: "", identifiers: ""})
+  const { isLoading, data, error, refetch } = useQuery(['signin'], () => fetcher({data: state, endpoint: "/auth/signin", method: "POST"}), {enabled: false, retry: false})
 
   let handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

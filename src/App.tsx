@@ -6,6 +6,7 @@ import Post from "./pages/Post";
 import Feeds from "./pages/Feeds";
 import LayoutFeed from "./components/LayoutFeed";
 import Layout from "./components/Layout";
+import Tweet from "./pages/Tweet";
 
 interface CredentialsContextType {
   payload: PayloadUser | null;
@@ -27,12 +28,16 @@ function App() {
           </Route>
 
           <Route element={<LayoutFeed />}>
-            <Route path="posts" element={<Feeds />} />
-            <Route path="posts/:id" element={<Post />} />
+            <Route path="/home" element={<Feeds />} />
+            <Route path="/explore" element={<></>} />
+            <Route path="/list" element={<></>} />
+            <Route path="/save" element={<></>} />
+            <Route path="/communities" element={<></>} />
+            <Route path="/:user/status/:id" element={<Post />} />
+            <Route path="/:user" element={<></>} />
           </Route>
       </Routes>
     </Playload.Provider>
-    
   )
 }
 

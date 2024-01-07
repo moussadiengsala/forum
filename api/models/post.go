@@ -4,7 +4,7 @@ import "time"
 
 type Post struct {
 	ID       string
-	Image    any
+	Image    [][]byte
 	Title    string
 	Content  string
 	AuthorID string

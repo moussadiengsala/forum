@@ -12,11 +12,13 @@ import (
 	service "learn.zone01dakar.sn/forum-rest-api/service/CRUD"
 )
 
+// this is for creating post, comment, reply
 type CreateFeed struct {
 	Fields        []string
 	Table         string
 	Credentials   interface{}
 	ItemsToInsert []interface{}
+	Files         [][]byte
 }
 
 func (f *CreateFeed) Create(w http.ResponseWriter, r *http.Request, response *lib.Response) {
@@ -36,6 +38,16 @@ func (f *CreateFeed) Create(w http.ResponseWriter, r *http.Request, response *li
 
 	var sqlService = service.SqlService(db.Instance)
 	var query, _ = core.NewQuery().INSERT(f.Fields...).FROMTABLE(f.Table).Build()
+	fmt.Println("hello world!!!")
+	if f.Fields != nil {
+		filenames, err := lib.UploadImages(w, f.Files)
+		if err != nil {
+			errors.ErrorWriter(response, "Error getting the sumited files!!!", http.StatusBadRequest)
+			return
+		}
+		itemsToInsert := append([]interface{}{filenames}, f.ItemsToInsert...)
+		f.ItemsToInsert = itemsToInsert
+	}
 
 	insertPostErr := sqlService.Create(query, f.ItemsToInsert...)
 
@@ -48,6 +60,7 @@ func (f *CreateFeed) Create(w http.ResponseWriter, r *http.Request, response *li
 	response.Data = f.Credentials
 }
 
+// this is for getting items post, comment, reply
 type Items struct {
 	Item     string
 	EntrieID string

@@ -19,9 +19,10 @@ type Credentials struct {
 	Identifiers string `json:"identifiers"`
 	Password    string `json:"password"`
 }
+
 type Payload struct {
-	User    models.User
-	Session models.Session
+	User    models.User `json:"user"`
+	Session models.Session `json:"session"`
 }
 
 type DB struct {

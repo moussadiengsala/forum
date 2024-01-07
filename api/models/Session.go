@@ -3,8 +3,8 @@ package models
 import "time"
 
 type Session struct {
-	Token          string
-	ExpirationDate time.Time
-	UserID         string
-	CreationDate   time.Time
+	Token          string `json:"token"`
+	ExpirationDate time.Time `json:"expiration"`
+	UserID         string `json:"user_id"`
+	CreationDate   time.Time `json:"creation_date"`
 }

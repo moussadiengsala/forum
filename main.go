@@ -1,14 +1,20 @@
 package main
 
 import (
-
-	// internals "golang-rest-api-starter/internals/config/database"
 	server "golang-rest-api-starter/internals/config/server"
 	"golang-rest-api-starter/router"
 	"golang-rest-api-starter/service/middleware"
+	"log"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading godotenv: ", err)
+	}
+
 	router := &router.NewRouter{
 		Middlewares: []router.Middleware{
 			middleware.AuthMiddleware,

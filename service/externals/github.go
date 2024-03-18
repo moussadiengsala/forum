@@ -4,12 +4,13 @@ import (
 	"fmt"
 	model "golang-rest-api-starter/models"
 	"net/url"
+	"os"
 )
 
 var GithubAuth = OAuthConfig{
 	Name:         "GITHUB",
-	ClientID:     "3a2bb5d588e9c9b5951b",
-	ClientSecret: "b4cce0c5de9a046d43c792ca5ce84ef0b1dfa08b",
+	ClientID:     os.Getenv("GITHUB_CLIENT_ID"),
+	ClientSecret: os.Getenv("GITHUB_CLIENT_SECRET"),
 	Scope:        []string{"user"},
 	RedirectURI:  "http://localhost:8080/auth/",
 	AuthURL:      "https://github.com/login/oauth/authorize",

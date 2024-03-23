@@ -14,8 +14,8 @@ type Config struct {
 }
 
 func (s *Config) Init(router *router.NewRouter) {
-	fmt.Println("Server started at ", s.Hostname, s.PORT)
-	err := http.ListenAndServe(s.PORT, router)
+	fmt.Printf("Server started at %s:%s \n", s.Hostname, s.PORT)
+	err := http.ListenAndServe(":"+s.PORT, router)
 	if errors.Is(err, http.ErrServerClosed) {
 		fmt.Printf("server closed\n")
 	} else if err != nil {

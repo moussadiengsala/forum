@@ -5,6 +5,7 @@ import (
 	"golang-rest-api-starter/router"
 	"golang-rest-api-starter/service/middleware"
 	"log"
+	"os"
 
 	"github.com/joho/godotenv"
 )
@@ -23,9 +24,14 @@ func main() {
 		},
 	}
 
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
 	// instantiate a new server
 	server := server.Config{
-		PORT:     ":8080",
+		PORT:     port,
 		Hostname: "http://localhost",
 	}
 	server.Init(router)

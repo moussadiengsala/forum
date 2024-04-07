@@ -5,14 +5,13 @@ import (
 	"errors"
 	"fmt"
 	model "golang-rest-api-starter/models"
-	"os"
 	"strings"
 )
 
 var GoogleAuth = OAuthConfig{
 	Name:         "GOOGLE",
-	ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
-	ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
+	ClientID:     "",
+	ClientSecret: "",
 	RedirectURI:  "http://localhost:8080/auth/login",
 	Scope:        []string{"email", "profile", "openid"},
 	AuthURL:      "https://accounts.google.com/o/oauth2/auth",

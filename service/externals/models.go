@@ -2,6 +2,7 @@ package externals
 
 import (
 	"fmt"
+	"os"
 	"strings"
 )
 
@@ -19,6 +20,8 @@ type OAuthConfig struct {
 }
 
 func (o *OAuthConfig) SetAuthURL(endpoint string) string {
+	o.ClientID = os.Getenv(fmt.Sprintf("%s_CLIENT_ID", o.Name))
+	o.ClientSecret = os.Getenv(fmt.Sprintf("%s_CLIENT_SECRET", o.Name))
 	o.RedirectURI = fmt.Sprintf("http://localhost:8080/auth/%s", endpoint)
 	params := BuildURL(o.AuthURLQuery())
 	// fmt.Print(params)
